@@ -35,7 +35,7 @@
     },
     "scripts": {
         "build": "webpack",
-        "start": "env-cmd -f ./.env src/server.js",
+        "start": "node src/server.js",
         "test": "env-cmd -f ./.env jest",
         "test:watch": "jest --watch",
         "heroku-prebuild": "npm install"
