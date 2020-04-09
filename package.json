@@ -23,7 +23,8 @@
         "env-cmd": "^10.1.0",
         "jest": "^25.1.0",
         "nodemon": "^2.0.2",
-        "supertest": "^4.0.2"
+        "supertest": "^4.0.2",
+        "webpack": "4.41.6"
     },
     "jest": {
         "testEnvironment": "node",
@@ -32,8 +33,10 @@
         ]
     },
     "scripts": {
-        "start": "nodemon src/server.js",
-        "test": "jest",
-        "test:watch": "jest --watch"
+        "build": "webpack",
+        "start": "node src/server.js",
+        "test": "env-cmd -f ./.env jest",
+        "test:watch": "jest --watch",
+        "heroku-prebuild": "npm install"
     }
 }
