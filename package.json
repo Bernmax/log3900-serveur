@@ -32,8 +32,8 @@
         ]
     },
     "scripts": {
-        "start": "env-cmd -f ./.env nodemon src/server.js",
-        "test": "env-cmd -f ./.env jest",
+        "start": "nodemon src/server.js",
+        "test": "jest",
         "test:watch": "jest --watch"
     }
 }
