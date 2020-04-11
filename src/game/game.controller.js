@@ -34,17 +34,20 @@ exports.getGame = async function(req, res) {
     }
 };
 
-exports.getRandomGame = async function(req, res) {
+// Socket use
+exports.getRandomGame = async function(playedGames) {
     try {
-        console.log("DSDFSF")
-        const filter = req.body.words;
-        console.log("Filter " + filter)
-        let words = await Game.find({ name: { $nin: filter} }).select("name -_id");
-        console.log("Words: " + words)
-        let word = words[Math.floor(Math.random() * words.length)].name;
-        let game = await Game.findOne({ name: word });
-        res.status(HTTP.STATUS.OK).send({ game });
+        let unplayedGamesCount = await Game.countDocuments({ games: { $nin: playedGames } });
+        let x;
+        if (unplayedGamesCount == 0) {
+            let totalGamesCount = await Game.countDocuments();
+            let randomIndex = Math.floor(Math.random() * totalGamesCount);
+            return await Game.findOne().skip(randomIndex);
+        } else {
+            let randomIndex = Math.floor(Math.random() * unplayedGamesCount);
+            return await Game.findOne({ games: { $nin: playedGames } }).skip(randomIndex);;
+        }
     } catch (error) {
-        res.status(HTTP.STATUS.BAD_REQUEST).send(error);
+        console.log("F NDJSFNKLS: " + error)
     }
-};
+}

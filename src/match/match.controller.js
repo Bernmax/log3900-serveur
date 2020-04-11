@@ -92,3 +92,15 @@ exports.updateStatus = async function(req, res) {
         res.status(HTTP.STATUS.CONFLICT).send(error);
     }
 }
+
+exports.countPlayersInMatch = async function(req, res) {
+    try {
+        let players = await Match.findOne({ name: req.params.name }).select(players);
+        if (players.length >= 4) {
+            throw new Error("Too many players");
+        }
+    } catch (error) {
+        LOGGER.info(error);
+        res.status(HTTP.STATUS.CONFLICT).send(error);
+    }
+}
