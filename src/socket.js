@@ -103,13 +103,6 @@ module.exports = function(http) {
           players.delete(username);
         }
 
-        if (players.size == 0) {
-          playersInChannel.delete(channel);
-          io.emit(SOCKET.CHAT.DELETE_CHANNEL, channel);
-        } else {
-          playersInChannel.set(channel, players);
-        }
-
         channelsSubscribed.delete(player);
         playerSocket.delete(socket.id);
 
