@@ -5,11 +5,11 @@ const MatchController = require("../match/match.controller");
 
 const limitPlayer = async function(req, res, next) {
     try {
-        let match = await MatchController.countPlayersInMatch(req,res);
+        await MatchController.countPlayersInMatch(req.params.name);
         next();
     } catch (error) {
         LOGGER.error(error);
-        res.status(HTTP.STATUS.UNAUTHORIZED).send({ error: error.message });
+        res.status(HTTP.STATUS.CONFLICT).send({ error: error.message });
     }
 };
 

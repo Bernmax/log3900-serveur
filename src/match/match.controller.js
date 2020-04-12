@@ -21,10 +21,9 @@ exports.addPlayer = async function(req, res) {
             { name: req.params.name },
             { $push: { players: { name: req.body.player } } }
         );
-
         res.status(HTTP.STATUS.OK).end();
     } catch (error) {
-        LOGGER.info(error);
+        LOGGER.error(error);
         res.status(HTTP.STATUS.CONFLICT).send(error);
     }
 }
@@ -71,7 +70,7 @@ exports.getMatch = async function(req, res) {
 
 exports.getUnstartedMatch = async function(req, res) {
     try{
-        let matches = await Match.find({ status: "Unstarted" });
+        let matches = await Match.find({ status: "Unstarted", playersCount: { $lt: 4 } });
         res.status(HTTP.STATUS.OK).send(matches);
     } catch (error) {
         LOGGER.info(error);
@@ -93,14 +92,9 @@ exports.updateStatus = async function(req, res) {
     }
 }
 
-exports.countPlayersInMatch = async function(req, res) {
-    try {
-        let players = await Match.findOne({ name: req.params.name }).select(players);
-        if (players.length >= 4) {
-            throw new Error("Too many players");
-        }
-    } catch (error) {
-        LOGGER.info(error);
-        res.status(HTTP.STATUS.CONFLICT).send(error);
+exports.countPlayersInMatch = async function(name) {
+    let match = await Match.findOne({ name: name }).select("players -_id");
+    if (match.players.length >= 4) {
+        throw new Error("Too many players");
     }
 }
