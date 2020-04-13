@@ -151,7 +151,7 @@ class MatchManager {
     }
 
     getPlayerInWaitingRoom(matchId) {
-        return this.waitingRoom.get(matchId);
+        return Array.from(this.waitingRoom.get(matchId));
     }
 
     async createMatch(username) {
