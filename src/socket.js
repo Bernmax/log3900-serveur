@@ -19,7 +19,6 @@ module.exports = function(http) {
     filter.addWords(...frenchBadwordsList.array);
 
     io.on(SOCKET.CHAT.CONNECTION, function(socket){
-      messageController.lastPage(socket.id, GENERAL);
       socket.join(GENERAL);
       console.log("Users connected: " + io.engine.clientsCount);
       // console.log("User connected" + dateString);
@@ -58,7 +57,7 @@ module.exports = function(http) {
           channelsSubscribed.set(username, new Set([channel]));
         }
           
-        messageController.lastPage(socket.id, channel);
+        messageController.lastPage(username, channel);
         let timestamp = Timestamp.currentDate();
         let  msg = { "message": username + " a rejoint la conversation.", "username": username, "timestamp": Timestamp.chatString(timestamp), "channel": channel };
         socket.to(channel).broadcast.emit(SOCKET.CHAT.MESSAGE, msg);
