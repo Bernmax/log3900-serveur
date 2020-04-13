@@ -151,12 +151,8 @@ module.exports = function(http) {
       socket.on(SOCKET.MATCH.JOIN_MATCH, (channel, username) => {
         socket.join(channel);
         let players = matchManager.getPlayerInWaitingRoom(channel);
-        if ( !players || players.length < 4) {
-          let playersInWaitingRoom = matchManager.addPlayerToWaitingRoom(channel, username);
-          io.emit(SOCKET.MATCH.JOIN_MATCH, playersInWaitingRoom);
-        } else {
-          socket.to(SOCKET.MATCH.FULL, "La partie est complète.");
-        }
+        let playersInWaitingRoom = matchManager.addPlayerToWaitingRoom(channel, username);
+        io.emit(SOCKET.MATCH.JOIN_MATCH, playersInWaitingRoom);
       });
 
       socket.on(SOCKET.MATCH.ANSWER, (matchId, answer) => {
