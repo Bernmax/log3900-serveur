@@ -4,8 +4,6 @@ const PAGE_SIZE = 25;
 var pageKeeper = new Map();
 
 exports.previousPage = async function(player, channel) {
-    console.log("Player - channels: " + pageKeeper.get(player).size);
-    console.log("channels - info: " + pageKeeper.get(player).get(channel));
     console.log(player + " " + channel);
 
     let infos = pageKeeper.get(player).get(channel);
@@ -31,9 +29,8 @@ exports.lastPage = async function(player, channel) {
         channelInfos.set(channel, {"offset": offset, "documents": remaining});
     }
     pageKeeper.set(player, channelInfos);
-    console.log("XXXXXXXXXXXPlayer - channels: " + pageKeeper.get(player).size);
-    console.log("XXXXXXXXXXXXchannels - info: " + pageKeeper.get(player).get(channel));
-    console.log("XXXXXXXXXX "+ player + " " + channel);
+
+    console.log("LAST "+ player + " " + channel);
 }
 
 exports.save = async function(message, username, channel, timestamp) {

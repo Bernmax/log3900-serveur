@@ -90,7 +90,7 @@ module.exports = function(http) {
       });
 
       socket.on(SOCKET.CHAT.HISTORY, async (channel) => {
-        let docs = await messageController.previousPage(socket.id, channel);
+        let docs = await messageController.previousPage(username, channel);
         socket.to(channel).emit(SOCKET.CHAT.HISTORY, docs);
       });
 
