@@ -146,6 +146,7 @@ module.exports = function(http) {
 
       // Match
       socket.on(SOCKET.MATCH.JOIN_MATCH, (channel, username) => {
+        socket.join(channel);
         let players = matchManager.getPlayerInWaitingRoom(channel);
         if ( !players || players.length < 4) {
           let playersInWaitingRoom = matchManager.addPlayerToWaitingRoom(channel, username);
@@ -160,7 +161,7 @@ module.exports = function(http) {
       });
 
       socket.on(SOCKET.MATCH.START_ROUND, (matchId) => {
-        matchManager.startTimer(matchId, 90);
+        matchManager.start(matchId, 90);
         io.to(matchId).emit(SOCKET.EMIT.START_ROUND, "Round started");
       });
 
@@ -171,6 +172,7 @@ module.exports = function(http) {
 
       socket.on(SOCKET.MATCH.START_MATCH, async (matchId) => {
         matchManager.addMatch(matchId, matchManager.getPlayerInWaitingRoom(matchId));
+        console.log(matchId)
         let round = await matchManager.nextRound(matchId);
         io.to(matchId).emit(SOCKET.MATCH.NEXT_ROUND, round);
         matchManager.startTimer(matchId, 90);
@@ -178,4 +180,3 @@ module.exports = function(http) {
     
     });
 }
-
