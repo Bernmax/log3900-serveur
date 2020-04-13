@@ -25,7 +25,6 @@ exports.lastPage = async function(player, channel) {
         channelInfos.set(channel, {"offset": offset, "documents": PAGE_SIZE});
     } else {
         channelInfos.set(channel, {"offset": offset, "documents": remaining});
-        pageKeeper.set(key, {"offset": offset, "documents": remaining});
     }
     pageKeeper.set(player, channelInfos);
 }
