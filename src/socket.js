@@ -89,7 +89,7 @@ module.exports = function(http) {
       });
 
       socket.on(SOCKET.CHAT.HISTORY, async (channel) => {
-        let docs = await messageController.previousPage(socket.id);
+        let docs = await messageController.previousPage(socket.id, channel);
         socket.to(channel).emit(SOCKET.CHAT.HISTORY, docs);
       });
 
@@ -160,7 +160,7 @@ module.exports = function(http) {
       });
 
       socket.on(SOCKET.MATCH.START_ROUND, (matchId) => {
-        matchManager.start(matchId, 90);
+        matchManager.startTimer(matchId, 90);
         io.to(matchId).emit(SOCKET.EMIT.START_ROUND, "Round started");
       });
 
@@ -173,7 +173,7 @@ module.exports = function(http) {
         matchManager.addMatch(matchId, matchManager.getPlayerInWaitingRoom(matchId));
         let round = await matchManager.nextRound(matchId);
         io.to(matchId).emit(SOCKET.MATCH.NEXT_ROUND, round);
-        matchManager.start(matchId, 90);
+        matchManager.startTimer(matchId, 90);
       });
     
     });
