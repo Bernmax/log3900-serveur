@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 exports.currentDate = function() {
     var d = new Date(1458619200000);
     var myTimezone = "America/Toronto";
