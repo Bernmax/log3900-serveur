@@ -139,7 +139,7 @@ class MatchManager {
             this.waitingRoom.set(matchId, new Set([username]));
         }
 
-        return this.waitingRoom.get(matchId); 
+        return Array.from(this.waitingRoom.get(matchId)); 
     }
 
     leaveWaitingRoom(matchId, username) {
@@ -147,7 +147,7 @@ class MatchManager {
             this.waitingRoom.get(matchId).delete(username);
         }
 
-        return this.waitingRoom.get(matchId); 
+        return Array.from(this.waitingRoom.get(matchId)); 
     }
 
     getPlayerInWaitingRoom(matchId) {
