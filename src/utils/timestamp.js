@@ -1,4 +1,4 @@
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 exports.currentDate = function() {
     var d = new Date(1458619200000);
