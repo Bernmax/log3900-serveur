@@ -1,7 +1,7 @@
 const Message = require("./message.model");
 const PAGE_SIZE = 25;
 
-var pageKeeper = new Map();
+const pageKeeper = new Map();
 
 exports.previousPage = async function(player, channel) {
     console.log(player + " " + channel);
