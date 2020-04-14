@@ -10,3 +10,4 @@ exports.chatString = function(timestamp) {
     var myDatetimeString = moment(timestamp).tz(myTimezone).format(myDatetimeFormat);
     return (" à " + myDatetimeString); 
 }
+
